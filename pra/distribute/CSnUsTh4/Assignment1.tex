@@ -1,0 +1,307 @@
+%&pdflatex
+\documentclass[11pt]{article}
+
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\usepackage{listings}
+\usepackage{hyperref}
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ...
+
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}%
+
+\title{Programming Applications (PRA), Minor Coursework Exercise 1, ``Making a Partnership'' (2.5\%)}
+%\author{Martin Chapman (martin.chapman@kcl.ac.uk)}
+\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\textbf{Please read the document marked `Q\&A Lab Projects and Pair Programming' carefully, before attempting any lab project. It contains important information on how to complete each minor piece of coursework. You will be asked to officially declare that you have read this document prior to submission. False declarations are taken seriously by both the department and by the college.}
+
+\emph{This lab project counts for 2.5\% of your mark for PRA minor coursework assessment, and is the first of four.}
+
+\emph{The release weeks for this assignment start 23rd January, at 23:55, and end 6th February, at 23:55. All submissions must occur before the end of the second release week.}
+
+\emph{If you have any questions about the structure of this assessment, please follow the `Additional Support' steps listed on KEATS.}
+
+The aims of the first lab project are as follows:
+
+\begin{enumerate}
+	
+	\item To revisit basic object-oriented concepts from 4CCS1PRP;
+	\item To understand the relationship between the Law of Demeter, coupling and encapsulation;
+	\item To use packages and your chosen IDE for the first time, if you have not already done so;
+	\item To allow you to experience pair programming for the first time, if you have no previously undertaken the practice.
+
+\end{enumerate}
+
+In this lab assignment, you and your partner will construct two versions of the same code. The versions will not be incremental, as we have seen previously. Instead, the first version will purposefully violate the Law of Demeter by being tightly coupled. You will then alter this code to produce a second version, which will utilise stricter encapsulation in order to obtain looser coupling, and adhere more closely to Demeter's law. By looking at these versions in parallel, we hope to illustrate more about the implications of Demeter's law, and the concept of coupling.
+
+\textbf{You must not complete any of these exercises without your chosen partner present.}
+
+\section{Setting up the packages}
+
+Create a new \emph{project} in your chosen IDE. Inside this project, create a new \emph{package} named according to a concatenation of your first name, and the first name of your partner ($<$partnerApartnerB$>$). So, if Martin Chapman and Steffen Zschaler were embarking on this exercise, our project would contain a package called \emph{martinsteffen}. The order of names here is unimportant.
+
+Inside this package, create a \emph{subpackage} called \emph{tightlycoupled}. After creating this subpackage its name, in most IDEs, should appear in the package or project view as $<$\emph{partnerApartnerB}$>$\\\emph{.tightlycoupled}, with $<$\emph{partnerApartnerB}$>$ naturally replaced with your first name, and that of your partner. If you locate the actual \emph{folder structure} created in your filesystem by your IDE for this project, you should now find a \emph{tightlycoupled} folder inside a $<$\emph{partnerApartnerB}$>$ folder. 
+
+\section{Gathering evidence}
+
+Inside your \emph{tightlycoupled} package, create a new class called \texttt{Evidence}. This class is designed to reflect a piece of evidence collected from, or relating to, a crime scene or a crime. As such, you should ensure that this class can be used to store the \texttt{type} of evidence found (e.g. ``_EvidenceType_''), and you should take appropriate steps to ensure that all instances of the \texttt{Evidence} class contain this \texttt{type} information. In addition, you should ensure that when any \texttt{Evidence} object is printed (i.e. passed as an argument to the \texttt{System.out.println} method), the content of the evidence's \texttt{type} is printed to the terminal, as opposed to the object's memory identifier. Finally, provide a means of \texttt{get}ting the \texttt{type} of evidence stored in any instance of the \texttt{Evidence} class.
+
+Once you have done this, the following test case should successfully create a new \texttt{Evidence} object:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+Evidence _EvidenceObject_ = new Evidence(``_EvidenceType_'');
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+To test that this is indeed the case, create another class, \texttt{Main}, within the $<$\emph{partnerApartnerB}$>$ package. Your package structure should now look something like this:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+<partnerApartnerB>/
+. . . . . . Main.java
+. . . . . . tightlycoupled/
+. . . . . . . . . . . . Evidence.java
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+If this package structure representation doesn't make sense to you, follow the appropriate channels listed in the `Additional Support' section of KEATS for further clarification.
+
+\texttt{Main} should be directly executable, and into \texttt{Main} you should paste the test case given above. \textbf{In addition}, in your partner's project specification (which they too should download from the link given on KEATS), they too will have a test case that creates an \texttt{Evidence} object, which may contain the same type of evidence, or a different type. Paste your partner's test case into \texttt{Main} also, so that \texttt{Main} contains both of your test cases, both of which should make brand new \texttt{Evidence} objects, that either pertain to two different, or two of the same types of evidence. 
+
+Call \texttt{System.out.println} with each of your \texttt{Evidence} objects so that when \texttt{Main} is executed, the two types of evidence that these objects represent are printed to the console in your IDE. If your partner was to have the evidence type ``DNA'', then the output from your program should look like the following:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+_EvidenceType_
+DNA
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+\section{Storing evidence}
+
+Implement a class called \texttt{EvidenceBox}, that will represent a box that contains multiple pieces of evidence collected from a crime scene or relating to a crime. This class should also exist in the \emph{tightlycoupled} package:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+<partnerApartnerB>/
+. . . . . . Main.java
+. . . . . . tightlycoupled/
+. . . . . . . . . . . . Evidence.java
+. . . . . . . . . . . . EvidenceBox.java
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+\texttt{EvidenceBox} should maintain a record of all the \texttt{Evidence} it currently contains. In addition, it should be possible to:
+
+\begin{enumerate}
+
+	\item \texttt{Add} new pieces of \texttt{Evidence} to the box.
+	\item \texttt{Extract} the record of \emph{all} the \texttt{Evidence} currently in the box.
+	\item \texttt{Display} each \texttt{type} of \texttt{Evidence} currently in the box on a new line in the console of the IDE. If there are multiple instances of the same type of evidence in a box, then the output line for that type should be \verb=Nx type=, where \verb=N= is the number of occurrences of that type (e.g. \verb=2x _EvidenceType_=).
+
+\end{enumerate}
+
+In addition, every \texttt{EvidenceBox} should have a \texttt{caseNumber} and a \texttt{caseName} (written on the side, we might imagine). It should be possible to \texttt{get} the case number  from an \texttt{EvidenceBox}.
+
+Inside \texttt{Main}, after the code which creates your test case \texttt{Evidence} object, and your partner's, and prints them, create an \texttt{EvidenceBox} with the case number 2005000381 and the case name ``S. Avery'', and then \texttt{add} your two \texttt{Evidence} objects to it.
+
+Then,  \texttt{display} all the types of evidence in the \texttt{EvidenceBox} you just created, so that when \texttt{Main} is now executed the output from your program appears as the following (again assuming your partner has the evidence type ``DNA''):
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+_EvidenceType_
+DNA
+_EvidenceListA_
+_EvidenceListB_
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+So, the types of both test case \texttt{Evidence} objects should be printed (as implement in the previous section), and then summarised by adding these objects to an \texttt{EvidenceBox} and \texttt{display}ing the contents of that box (as implemented in this section).
+
+\section{Examining the evidence}
+
+Implement a class called \texttt{Policeman} (or \texttt{Cop,} if you prefer to use the vernacular from across the pond):
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+<partnerApartnerB>/
+. . . . . . Main.java
+. . . . . . tightlycoupled/
+. . . . . . . . . . . . Evidence.java
+. . . . . . . . . . . . EvidenceBox.java
+. . . . . . . . . . . . Policeman.java
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+Every \texttt{Policeman} should have a \texttt{name}, and this name should be printed to the console in your IDE whenever a \texttt{Policeman} object is printed.
+
+Policemen can have, in their possession at any one time, a collection of \texttt{EvidenceBox}es for examination. When a \texttt{Policeman} \texttt{take}s an \texttt{EvidenceBox}, it should be stored in this collection. 
+
+Inside \texttt{Main}, create two \texttt{Policemen} with the names ``J. Lenk'' and ``A. Colborn''. Then, make the \texttt{Policeman} object that represents J. Lenk \texttt{take} the \texttt{EvidenceBox} you created in the previous section, with the case number 2005000381 and the case name S. Avery.
+
+Next, we want to give a \texttt{Policeman} the ability to \texttt{get} \emph{all} pieces of evidence of a certain type from a box in their possession with a certain case number. For example, J. Lenk may wish to find all pieces of DNA evidence in the box with the case number 2005000381. The general procedure required within the \texttt{Policeman} class to do this is as follows:
+
+\begin{enumerate}
+	
+	\item Assume the presence of a desired \texttt{caseNumber} (e.g. 2005000381) and a desired \texttt{type} of evidence (e.g. ``DNA'').
+
+	\item Define a list that will store all the objects from an evidence box that match the desired type.
+	
+	\item Go through each \texttt{EvidenceBox} in the \texttt{Policeman}'s possession.
+	
+	\item Determine whether the case number of the current \texttt{EvidenceBox} matches the desired case number. If it does, select this box.
+	
+	\item \texttt{Extract} the record of all pieces of \texttt{Evidence} in the selected \texttt{EvidenceBox} (this functionality was provided inside \texttt{EvidenceBox} in Section 3, Point 2). 
+	
+	\item Examine each piece of \texttt{Evidence} in the record extracted from the selected \texttt{EvidenceBox} in turn.
+	
+	\item Check whether the current piece of \texttt{Evidence} being examined matches the desired \texttt{type} of evidence that is being searched for. If it does, add it to the list of objects that match the desired type.
+	
+\end{enumerate}
+
+Implement this procedure, so that inside \texttt{Main} you can instruct J. Lenk to \texttt{get} all the DNA evidence in S. Avery's case, 2005000381 (there may not be any DNA evidence in your \texttt{EvidenceBox} instance, depending on the types of evidence you and your partner have on your coursework specification, but this is ok). To confirm that this evidence has been located, you should print the result of the procedure above (i.e. in this example, the list of \texttt{Evidence} objects that are of DNA type in your \texttt{EvidenceBox}), with a suitable prefix. Again, this may be a null result if you do not happen to have any DNA evidence in your evidence box.
+
+Your sample output should therefore now look like the following:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+_EvidenceType_
+DNA
+_EvidenceListA_
+_EvidenceListB_
+Pieces of DNA Evidence in Evidence Box number 2005000381 found  by J. Lenk: 
+_EvidenceListC_
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+\section{Starting to visualise things (optional)}
+
+At this point, you may like to implement a simple console-based GUI to allow a user to interact with the code you have produced so far. In other words, you might like to extend your program in order to use \texttt{Scanner} and \texttt{System.in} to read input from a user in order to carry out the tasks you have done so far in \texttt{Main} in an ad-hoc and dynamic manner. For example, you might like to offer the user a simple choice whereby they can choose to create a new piece of evidence with a type, a new evidence box with a case number and case name, or to add an existing piece of evidence to an evidence box. Feedback can be given to the user via \texttt{System.out}.
+
+\textbf{Essential:} Your console-based code must not interfere with your existing classes. Use \texttt{Main} as a model; a class that simply makes and interacts with the objects created, without those objects being dependent upon \texttt{Main}'s existence. Separating the `view' of a program from the `functionality' was discussed briefly in PRP last semester, and will be discussed in more detail in this module later in the semester.
+
+\emph{Console-based GUI task originally provided by Steffen Zschaler and Andrew Coles. Edits and updates by Martin Chapman.}
+
+\section{Documenting your code}
+
+At this stage, most of your implementation for this project is complete, so you can think, if you haven't already, about commenting your code in order to help you understand what's going on (essential for your upcoming lab assessment) and to help other people understand what's going on. Comments should be familiar to you, and take the form of single or multiline statements placed directly into your source code in order to explain the surrounding lines.
+
+\emph{Documentation} differs slightly from commenting, as it suggests the presence of an external document that complements your program by providing details of the \emph{interface} (meaning the public methods and constructors, in this context) available to someone if they wish to make an object of one of your classes. You have already seen examples of interface documentation when you have used the Java API, which tells you the public methods and constructors available to us when we choose to make objects of the classes provided to us by Oracle (formerly Sun) in the Java libraries. 
+
+Java provides a tool called \emph{JavaDoc} to help you generate documentation similar to what you find in the official Java API. JavaDoc does this by detecting special types of specifically placed and formatted comments in your program -- known as JavaDoc comments -- and then uses these comments as the basis for generating formatted HTML pages. In this section, you are going to experiment with JavaDoc to produce some documentation for the \texttt{Evidence}, \texttt{EvidenceBox} and \texttt{Policeman} classes.
+
+Firstly, make yourself familiar with the format of JavaDoc comments. If you are already comfortable with the principles of writing JavaDoc comments, the following serves as a useful overview of the available tags: \url{http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#javadoctags}. If not, substantial information is available at \url{http://www.oracle.com/technetwork/java/javase/documentation/index-jsp-135444.html}. The most relevant subsection is probably \url{http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html} (you do not need to read this completely, but you should understand the basic structure of JavaDoc comments).
+		
+Secondly, make yourself familiar with the use of the JavaDoc generator (either from the command line or by using the appropriate facility from your IDE) which will use the comments you have written, and the JavaDoc tags you have selected, to produce custom documentation for your program:
+
+	\begin{itemize}
+	
+		\item A quick guide for generating JavaDoc in Eclipse is \url{http://www.java-forums.org/blogs/java-tip/286-creating-javadocs-eclipse.html}. 
+		
+		\item Another more detailed but slightly rougher guide is \url{http://www.eclipse-blog.org/eclipse-ide/generating-javadoc-in-eclipse-ide.html}.
+		
+	\end{itemize}
+	
+Once comfortable, provide JavaDoc comments for the public methods of \texttt{Evidence}, \texttt{EvidenceBox} and \texttt{Policeman} and generate the JavaDoc documentation from them. Inspect the resulting documentation, play around with the options for generation and with the comments you have written.
+
+\emph{Links to documentation originally provided by Steffen Zschaler and Andrew Coles. Edits and updates by Martin Chapman.}
+
+\section{Decoupling your classes}
+
+Go to your \texttt{Evidence} class, and find the name of the method that allows you to discern the type of evidence currently stored in any instance of this class. In my solution, this method is called \texttt{getEvidenceType}, and I will refer to it as such from now on. Try changing the name of this method. I changed mine to \texttt{retrieveEvidenceType}. What happens? If you have followed the instructions above to the letter, you should receive errors in both your \texttt{Policeman} and \texttt{EvidenceBox} classes. If you do not, because you perhaps deviated from the specification slightly to anticipate this issue, that's fine, read on anyway to confirm your understanding.
+
+For most of you however, these two errors will appear. \texttt{EvidenceBox} complains when it tries to \texttt{display} all the types of evidence in a box, and \texttt{Policeman} complains when searching for all evidence of a particular type in a box. At first these errors may seem unavoidable: a method name has been changed, so all references to it need updating. However, because of the way we have structured our current solution, references to the \texttt{getEvidenceType} method need updating in an \emph{unnecessary} number of places.
+
+Let's consider the interaction between \texttt{Policeman}, \texttt{EvidenceBox} and \texttt{Evidence}. To represent a policeman searching for all pieces of evidence of a certain type in a chosen evidence box, the \texttt{Policeman} class extracts the record from the \texttt{EvidenceBox} class of all the pieces of \texttt{Evidence} in that box. \texttt{Policeman} then interacts \emph{directly} with each \texttt{Evidence} object in that record in order to determine its type (see Section 4 for clarification), which violates Demeter's Law. Remember Demeter's Law tells us that a method $M$ of an object $O$ may only invoke methods of the following kinds of objects:
+
+\begin{enumerate}
+
+	\item O itself
+	\item Objects in M's parameters
+	\item Any objects created/instantiated within M
+	\item O's direct component objects (objects in a `has-a' relationship with O)
+	\item A global object, accessible by O, in the scope of M
+
+\end{enumerate}
+
+Because \texttt{Policeman} (O), specifically its method that allows a \texttt{Policeman} to get all pieces of evidence of a certain type from a box in their possession with a certain case number (M), interacts with \texttt{Evidence} -- an object that doesn't meet any of these criteria -- we can confirm that this Law is violated. We can think about this in another way: \texttt{Policeman} and \texttt{EvidenceBox} are `friends', because \texttt{Policeman} contains a collection of \texttt{EvidenceBox}es. \texttt{EvidenceBox} and \texttt{Evidence} are `friends', because \texttt{EvidenceBox} contains a collection of pieces of \texttt{Evidence}. Therefore, to \texttt{Policeman}, \texttt{Evidence} is a `friend of a friend', so when \texttt{Policeman} communicates with \texttt{Evidence} (to discern its \texttt{type}), this violates the natural interpretation of Demeter's Law: only talk to your friends.
+
+The consequence of violating Demeter's law is \emph{tight coupling}, or an unnecessary interdependency between classes -- in this case between \texttt{Policeman} and \texttt{Evidence}\footnote{It is worth conducting some further reading in order to understand when a large amount of interdependency is actually required.} -- requiring additional, and unwanted maintenance when small updates are made, as we have seen.
+
+To solve this problem we are going to decouple \texttt{Policeman} from \texttt{Evidence}. Firstly, if you changed the name of a method in the above paragraph in order to identify the tight coupling (for me, this involved changing \texttt{getEvidenceType} to \texttt{retrieveEvidenceType}) then change it back so that you no longer have any errors in your program. 
+
+Next, create a new subpackage below $<$\emph{partnerApartnerB}$>$, called \emph{looselycoupled} and copy all your existing classes into this package so that your overall package structure now looks like the following:
+
+\vspace{-8mm}
+
+\begin{verbatim}
+
+<partnerApartnerB>/
+. . . . . . Main.java
+. . . . . . tightlycoupled/
+. . . . . . . . . . . . Evidence.java
+. . . . . . . . . . . . EvidenceBox.java
+. . . . . . . . . . . . Policeman.java
+. . . . . . looselycoupled/
+. . . . . . . . . . . . Evidence.java
+. . . . . . . . . . . . EvidenceBox.java
+. . . . . . . . . . . . Policeman.java
+
+\end{verbatim}
+
+\vspace{-8mm}
+
+To decouple \texttt{Policeman} from \texttt{Evidence}, we can more strictly encapsulate the collection of  \texttt{Evidence} inside \texttt{EvidenceBox}, so that \texttt{Policeman} can no longer interact directly with this collection, and thus with the \texttt{Evidence} objects contained within it. This involves removing one of the pieces of functionality from \texttt{EvidenceBox}, originally listed in Section 3 as `\texttt{Extract} the record of \emph{all} the \texttt{Evidence} currently in the box.'. In other words, the version of \texttt{EvidenceBox} stored under the \emph{looselycoupled} package should be altered so that it is no longer possible to access the list of \texttt{Evidence} objects held within it. However, make sure this functionality remains inside the version of \texttt{EvidenceBox} in the \emph{tightlycoupled} package, as a record of you completing this section of the coursework.
+
+You should now have an new error in your \texttt{Policeman} class, because the ability for a \texttt{Policeman} to search for all instances of a particular type of evidence in a particular evidence box (a method I will refer to from now on as \texttt{getEvidence}) is currently based on the extraction of the record of all the \texttt{Evidence} held within an \texttt{EvidenceBox} (Step 5 in the procedure given in Section 4), which is no longer possible. This error is good, however, because it confirms that \texttt{Policeman} and \texttt{Evidence} can no longer be tightly coupled.
+
+To address this error, and to restore the correct functionality to \texttt{getEvidence}, we must first move the search for all instances of a particular type of evidence into \texttt{EvidenceBox} itself; the only place where a record of all the evidence in a box is now accessible.  To achieve this, add a new method into \texttt{EvidenceBox} that, when supplied with a certain type of evidence, returns a list containing all the pieces of evidence inside the box that are of this type. I will refer to this method as \texttt{getEvidenceByType}. This should not be a difficult method to implement, as the code to achieve this simply needs to be moved from \texttt{getEvidence} in \texttt{Policeman} into \texttt{getEvidenceByType} in \texttt{EvidenceBox}. Review Section 4 if necessary. 
+
+Following this, we can update \texttt{Policeman}, so that when \texttt{getEvidence} is called with a specified case number and a specified evidence type, the evidence box is located in the same way as before (using the specified case number), but rather than extracting the list of evidence from this box and examining it inside \texttt{getEvidence} directly (which is no longer possible), \texttt{getEvidence} instead calls \texttt{getEvidenceByType} inside this \texttt{EvidenceBox} to perform this task. To \texttt{getEvidenceByType} \texttt{getEvidence} should pass the specified evidence type, and \texttt{getEvidenceByType} should then in turn determine which pieces of evidence exist in the box of this type, and return a list of these back to \texttt{getEvidence} (which it already does). \texttt{getEvidence} can then return the list of evidence back from \texttt{Policeman}, as it did before. So, to decouple \texttt{Policeman} from \texttt{Evidence} here is reasonably simple: force \texttt{Policeman} to \emph{delegate} the task of locating all pieces of evidence of a certain type to \texttt{EvidenceBox}, rather than performing this task itself.
+
+Because you have not altered the interface of any of your classes (i.e. the method names, their parameters and return types) while making these modifications, the test code in \texttt{Main} should work whether you choose to use the version of your classes inside the \emph{looselycoupled} or \emph{tightlycoupled} packages. Test this by swapping which version of these classes \texttt{Main} refers to. If reference errors occur, try and discern which element of your class interface has been unnecessary altered.
+
+Finally, go back and change the name of \texttt{getEvidenceType} in \texttt{Evidence} again. Now, you should only have an error inside \texttt{EvidenceBox}, where you will need to update any references to \texttt{getEvidenceType}. Updates are no longer required inside \texttt{Policeman}, because we decoupled it from \texttt{Evidence}, and therefore changes in \texttt{Evidence} do not affect it directly. On this small scale the difference in work is not noticeable, but on a larger scale effectively managing coupling can dramatically improve the maintainability of your code.
+
+\subsection{Submitting your work}
+
+If, once finished, you wish to submit your work to us for preliminary feedback, you should do so by following the `Additional Support' steps from Step 3.2 onwards (i.e. direct contact), in order to avoid sharing your solution with your peers unnecessarily.
+
+If you are happy with your solution, then you both you and your partner should submit identical copies of it to KEATS, adhering to all the submission rules given in the Q\&A document referenced at the beginning of this project brief. The folder you compress for submission should be your top-level package, or the first folder inside your project source. For this assignment, the top-level folder is $<$\emph{partnerApartnerB}$>$. Compress this folder directly, so that the file you submit is of the form $<$\emph{partnerApartnerB}$>$.$<$compression\_extension$>$ (e.g. martinsteffen.zip). Your compressed folder should therefore contain your complete package structure, detailed in the previous section, and including both copies of the \emph{tightlycoupled} and \emph{looselycoupled} code.
+
+\end{document}
